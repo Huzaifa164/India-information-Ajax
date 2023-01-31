@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Information Ajax</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
+        .card {
+            width: 300px;
+            height: 350px;
+            border: 1px solid black;
+            border-radius: 20px;
+            background-color: white;
+            transition: all 0.5s;
+        }
+        .card:hover {
+            width: 310px;
+            height: 360px;
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .card-body > img {
+            width: 200px;
+            padding-top: 20px;
+        }
+        .card-body > p {
+            border-bottom: 1px solid black;
+            width: 100%;
+            text-align: center;
+            padding-bottom: 20px;
+        }
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+            gap: 10px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        const request = new XMLHttpRequest();
+        request.open("GET","https://restcountries.com/v2/name/india");
+        request.send();
+
+        request.addEventListener("load", function() {
+            const container = document.querySelector("#container");
+            // console.log(this.responseText);
+            const [british, india] = JSON.parse(this.responseText);
+            console.log(india);
+            const htmlData = `
+                <div class="card">
+                    <div class="card-body">
+                        <img src="${india.flag}" />
+                        <h2 class="country-name">${india.name}</h2>
+                        <p class="capital">capital : ${india.capital}</p>
+                        <div class="card-footer">
+                            <div class="card=social">
+                                <h3>${india.nativeName}</h3>
+                                <p>Native Language</p>
+                            </div>
+                            <div class="card=social">
+                                <h3>${india.population}</h3>
+                                <p>Population</p>
+                            </div>
+                            <div class="card=social">
+                                <h3>${india.demonym}</h3>
+                                <p>Demonym</p>
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = htmlData;
+        })
+    </script>
+</body>
+</html>
